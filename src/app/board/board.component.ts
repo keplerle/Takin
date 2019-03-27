@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-const numrow = 3;
-const numcol = 3;
+
 @Component({
   selector: "app-board",
   templateUrl: "./board.component.html",
@@ -10,8 +9,12 @@ export class BoardComponent implements OnInit {
   cardBoard: number[][];
   isSolved: boolean;
   elementToMove: number;
+  turn: number;
+  numrow: number;
   constructor() {
     this.cardBoard = [];
+    this.turn = 0;
+    this.numrow = 3;
   }
 
   ngOnInit() {
@@ -19,17 +22,18 @@ export class BoardComponent implements OnInit {
   }
 
   newGame() {
+    this.turn = 0;
     this.isSolved = false;
     this.cardBoard = [];
-    for (let i = 0; i < numrow; i++) {
+    for (let i = 0; i < this.numrow; i++) {
       this.cardBoard[i] = [];
-      for (let j = 0; j < numcol; j++) {
-        this.cardBoard[i][j] = j + 3 * i + 1;
+      for (let j = 0; j < this.numrow; j++) {
+        this.cardBoard[i][j] = j + this.numrow * i + 1;
       }
     }
 
-    const missing = this.cardBoard[numrow-1][numcol-1];
-    this.cardBoard[numrow-1][numcol-1] = null;
+    const missing = this.cardBoard[this.numrow-1][this.numrow-1];
+    this.cardBoard[this.numrow-1][this.numrow-1] = null;
     this.cardBoard.forEach(subCardBoard => {
       subCardBoard.sort(() => Math.random() - 0.5);
     });
@@ -41,7 +45,7 @@ export class BoardComponent implements OnInit {
     let isSolved = true;
     for (let i = 0; i < this.cardBoard.length; i++) {
       for (let j = 0; j < this.cardBoard[i].length; j++) {
-        if (this.cardBoard[i][j] && this.cardBoard[i][j] !== j + 3 * i + 1) {
+        if (this.cardBoard[i][j] && this.cardBoard[i][j] !== j + this.numrow * i + 1) {
           isSolved = false;
         }
       }
@@ -68,15 +72,22 @@ export class BoardComponent implements OnInit {
       const temp = this.cardBoard[i][j];
       this.cardBoard[i][j] = this.cardBoard[k][v];
       this.cardBoard[k][v] = temp;
+      this.turn++;
     }
   }
+
   isSolvable(missing) {
     const flatArray = [];
     let countSwap = 0;
     this.cardBoard.forEach(list => {
       list.forEach(element => flatArray.push(element));
     });
-    const positionEmpty = flatArray.indexOf(null);
+    let positionEmpty;
+    if (flatArray.indexOf(null) === flatArray.length - 1) {
+      positionEmpty = 0;
+    } else {
+      positionEmpty = 1;
+    }
     flatArray[positionEmpty] = missing;
     for (let i = flatArray.length - 1; i > 0; i--) {
       for (let j = 0; j < i; j++) {
@@ -88,7 +99,7 @@ export class BoardComponent implements OnInit {
         }
       }
     }
-    if (countSwap % 2 !== positionEmpty % 2) {
+    if (countSwap % 2 !== positionEmpty) {
       this.newGame();
     }
   }

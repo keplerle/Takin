@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatGridListModule} from '@angular/material/grid-list';
-const materialModule = [ BrowserAnimationsModule,
-  MatGridListModule];
+import {MatGridListModule, MatButtonModule} from '@angular/material';
+const materialModule = [
+  BrowserAnimationsModule,
+  MatGridListModule,
+  MatButtonModule];
 @NgModule({
   declarations: [],
   imports: [
