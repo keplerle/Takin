@@ -1,0 +1,10 @@
+.case{
+  border: 1px solid black;
+  &.number{
+  background-color: gray;
+}
+  &.empty{
+  background-color: white;
+}
+}
+

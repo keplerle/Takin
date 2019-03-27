@@ -1,0 +1,9 @@
+<div>
+  <mat-grid-list cols="3" rowHeight="1:0.5" *ngFor="let list of cardBoard">
+    <mat-grid-tile class="case"[ngClass]="{'empty': !item, 'number': item}"*ngFor="let item of list" (click)="isSwapable(item)">{{item}}</mat-grid-tile>
+  </mat-grid-list>
+  <div>
+   <button mat-raised-button (click)="newGame()">New Game</button>
+  </div>
+  <div *ngIf="verified()">Congratulation !!!</div>
+</div>
