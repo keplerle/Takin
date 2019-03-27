@@ -1,10 +1,11 @@
 <div>
   <h1>Takin !</h1>
+  <div *ngIf="verify()">Félicitation, tu as gagné !!!</div>
   <mat-grid-list cols="{{numrow}}" rowHeight="1:0.25" *ngFor="let list of cardBoard">
-    <mat-grid-tile class="case"[ngClass]="{'empty': !item, 'number': item}"*ngFor="let item of list" (click)="!verified() ? isSwapable(item) : null">{{item}}</mat-grid-tile>
+    <mat-grid-tile class="case"[ngClass]="{'empty': !item, 'number': item}"*ngFor="let item of list" (click)="!verify() ? isSwapable(item) : null">{{item}}</mat-grid-tile>
   </mat-grid-list>
   <div class="actions">
-   <button mat-raised-button (click)="newGame()">New Game</button>
+   <button mat-raised-button (click)="newGame()">Nouvelle partie</button>
    <div>
    <button mat-raised-button (click)="newGameX(3)">3X3</button>
    <button mat-raised-button (click)="newGameX(4)">4X4</button>
@@ -13,5 +14,5 @@
 
    <span>Nombre de tours: {{turn}}</span>
   </div>
-  <div *ngIf="verify()">Congratulation !!!</div>
+
 </div>

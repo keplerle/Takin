@@ -109,10 +109,10 @@ export class BoardComponent implements OnInit {
       }
       if (swapflag) {
         countSwap++;
+        swapflag = false;
       }
     }
     if (countSwap % 2 !== positionEmpty) {
-      console.log(countSwap);
       this.newGame();
     }
   }
