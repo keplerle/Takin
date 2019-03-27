@@ -1,18 +1,30 @@
 <div>
-  <h1>Takin !</h1>
-  <div *ngIf="verify()">Félicitation, tu as gagné !!!</div>
-  <mat-grid-list cols="{{numrow}}" rowHeight="1:0.25" *ngFor="let list of cardBoard">
-    <mat-grid-tile class="case"[ngClass]="{'empty': !item, 'number': item}"*ngFor="let item of list" (click)="!verify() ? isSwapable(item) : null">{{item}}</mat-grid-tile>
+  <mat-toolbar color="primary">
+     <mat-toolbar-row>
+      <span>Takin</span>
+      <span>Nombre de tours: {{ turn }}</span>
+    </mat-toolbar-row></mat-toolbar>
+  <mat-grid-list
+    cols="{{ numrow }}"
+    rowHeight="1:0.25"
+    *ngFor="let list of cardBoard"
+  >
+    <mat-grid-tile
+      class="case"
+      [ngClass]="{ empty: !item, number: item }"
+      *ngFor="let item of list"
+      (click)="!isSolved() ? isSwapable(item) : null"
+      >{{ item }}</mat-grid-tile
+    >
   </mat-grid-list>
   <div class="actions">
-   <button mat-raised-button (click)="newGame()">Nouvelle partie</button>
-   <div>
-   <button mat-raised-button (click)="newGameX(3)">3X3</button>
-   <button mat-raised-button (click)="newGameX(4)">4X4</button>
-   <button mat-raised-button (click)="newGameX(5)">5X5</button>
-   </div>
+    <button mat-raised-button color="primary" (click)="newGame()">Nouvelle partie</button>
+    <div>
+      <button mat-raised-button color="accent" (click)="newGameX(3)">3X3</button>
+      <button mat-raised-button color="accent" (click)="newGameX(4)">4X4</button>
+      <button mat-raised-button color="accent" (click)="newGameX(5)">5X5</button>
+    </div>
 
-   <span>Nombre de tours: {{turn}}</span>
+
   </div>
-
 </div>

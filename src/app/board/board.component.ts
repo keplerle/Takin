@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { MatSnackBar } from "@angular/material";
 
 @Component({
   selector: "app-board",
@@ -7,11 +8,11 @@ import { Component, OnInit } from "@angular/core";
 })
 export class BoardComponent implements OnInit {
   cardBoard: number[][];
-  isSolved: boolean;
+
   elementToMove: number;
   turn: number;
   numrow: number;
-  constructor() {
+  constructor(private _snackbar: MatSnackBar) {
     this.cardBoard = [];
     this.turn = 0;
     this.numrow = 3;
@@ -23,7 +24,6 @@ export class BoardComponent implements OnInit {
 
   newGame() {
     this.turn = 0;
-    this.isSolved = false;
     this.cardBoard = [];
     for (let i = 0; i < this.numrow; i++) {
       this.cardBoard[i] = [];
@@ -45,20 +45,25 @@ export class BoardComponent implements OnInit {
     this.newGame();
   }
 
-
-  verify() {
-    let isSolved = true;
+  isSolved() {
+    let solved = true;
     for (let i = 0; i < this.cardBoard.length; i++) {
       for (let j = 0; j < this.cardBoard[i].length; j++) {
         if (
           this.cardBoard[i][j] &&
           this.cardBoard[i][j] !== j + this.numrow * i + 1
         ) {
-          isSolved = false;
+          solved = false;
         }
       }
     }
-    return isSolved;
+    if (solved && this.turn !== 0) {
+      this._snackbar.open(   'Félicitation, tu as gagné !!!', 'BRAVO',
+        {
+          duration: 3000
+        });
+    }
+    return solved;
   }
 
   isSwapable(value) {
@@ -81,10 +86,15 @@ export class BoardComponent implements OnInit {
       this.cardBoard[i][j] = this.cardBoard[k][v];
       this.cardBoard[k][v] = temp;
       this.turn++;
+      this.isSolved();
     }
   }
 
   isSolvable(missing) {
+    if (this.isSolved()) {
+      this.newGame();
+    }
+
     const flatArray = [];
     let swapflag = false;
     let countSwap = 0;
@@ -98,6 +108,7 @@ export class BoardComponent implements OnInit {
       positionEmpty = 1;
     }
     flatArray[positionEmpty] = missing;
+
     for (let i = flatArray.length - 1; i > 0; i--) {
       for (let j = 0; j < i; j++) {
         if (flatArray[j + 1] < flatArray[j]) {

@@ -13,4 +13,11 @@
   align-items: center;
   margin-top: 10px;
 }
-
+mat-toolbar{
+  border: 1px solid black;
+}
+mat-toolbar-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
