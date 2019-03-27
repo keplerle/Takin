@@ -5,10 +5,13 @@
   </mat-grid-list>
   <div class="actions">
    <button mat-raised-button (click)="newGame()">New Game</button>
-   <button mat-raised-button (click)="numrow=3; newGame()">3X3</button>
-   <button mat-raised-button (click)="numrow=4; newGame()">4X4</button>
-   <button mat-raised-button (click)="numrow=5; newGame()">5X5</button>
+   <div>
+   <button mat-raised-button (click)="newGameX(3)">3X3</button>
+   <button mat-raised-button (click)="newGameX(4)">4X4</button>
+   <button mat-raised-button (click)="newGameX(5)">5X5</button>
+   </div>
+
    <span>Nombre de tours: {{turn}}</span>
   </div>
-  <div *ngIf="verified()">Congratulation !!!</div>
+  <div *ngIf="verify()">Congratulation !!!</div>
 </div>

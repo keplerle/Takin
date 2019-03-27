@@ -31,7 +31,6 @@ export class BoardComponent implements OnInit {
         this.cardBoard[i][j] = j + this.numrow * i + 1;
       }
     }
-
     const missing = this.cardBoard[this.numrow - 1][this.numrow - 1];
     this.cardBoard[this.numrow - 1][this.numrow - 1] = null;
     this.cardBoard.forEach(subCardBoard => {
@@ -41,7 +40,13 @@ export class BoardComponent implements OnInit {
     this.isSolvable(missing);
   }
 
-  verified() {
+  newGameX(row: number) {
+    this.numrow = row;
+    this.newGame();
+  }
+
+
+  verify() {
     let isSolved = true;
     for (let i = 0; i < this.cardBoard.length; i++) {
       for (let j = 0; j < this.cardBoard[i].length; j++) {
