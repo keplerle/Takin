@@ -32,8 +32,8 @@ export class BoardComponent implements OnInit {
       }
     }
 
-    const missing = this.cardBoard[this.numrow-1][this.numrow-1];
-    this.cardBoard[this.numrow-1][this.numrow-1] = null;
+    const missing = this.cardBoard[this.numrow - 1][this.numrow - 1];
+    this.cardBoard[this.numrow - 1][this.numrow - 1] = null;
     this.cardBoard.forEach(subCardBoard => {
       subCardBoard.sort(() => Math.random() - 0.5);
     });
@@ -45,7 +45,10 @@ export class BoardComponent implements OnInit {
     let isSolved = true;
     for (let i = 0; i < this.cardBoard.length; i++) {
       for (let j = 0; j < this.cardBoard[i].length; j++) {
-        if (this.cardBoard[i][j] && this.cardBoard[i][j] !== j + this.numrow * i + 1) {
+        if (
+          this.cardBoard[i][j] &&
+          this.cardBoard[i][j] !== j + this.numrow * i + 1
+        ) {
           isSolved = false;
         }
       }
@@ -78,6 +81,7 @@ export class BoardComponent implements OnInit {
 
   isSolvable(missing) {
     const flatArray = [];
+    let swapflag = false;
     let countSwap = 0;
     this.cardBoard.forEach(list => {
       list.forEach(element => flatArray.push(element));
@@ -95,11 +99,15 @@ export class BoardComponent implements OnInit {
           const temp = flatArray[j + 1];
           flatArray[j + 1] = flatArray[j];
           flatArray[j] = temp;
-          countSwap++;
+          swapflag = true;
         }
+      }
+      if (swapflag) {
+        countSwap++;
       }
     }
     if (countSwap % 2 !== positionEmpty) {
+      console.log(countSwap);
       this.newGame();
     }
   }
